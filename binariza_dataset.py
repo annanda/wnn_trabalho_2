@@ -322,14 +322,14 @@ table_to = rows.Table(fields=OrderedDict(new_fields))
 for row in new_cat_rows:
     table_to.append(row)
 
-rows.export_to_csv(table_to, "retina_cat_train.csv")
+rows.export_to_csv(table_to, "dataset/new_train_cat.csv")
 
 new_fields = [(key, rows.fields.IntegerField) for key in new_dog_rows[0].keys()]
 table_to = rows.Table(fields=OrderedDict(new_fields))
 for row in new_dog_rows:
     table_to.append(row)
 
-rows.export_to_csv(table_to, "retina_dog_train.csv")
+rows.export_to_csv(table_to, "dataset/new_train_dog.csv")
 
 ##################
 # Limpando dados de teste
@@ -392,11 +392,11 @@ table_to = rows.Table(fields=OrderedDict(new_fields))
 for row in new_cat_rows:
     table_to.append(row)
 
-rows.export_to_csv(table_to, "retina_cat_test.csv")
+rows.export_to_csv(table_to, "dataset/new_cat_test.csv")
 
 new_fields = [(key, rows.fields.IntegerField) for key in new_dog_rows[0].keys()]
 table_to = rows.Table(fields=OrderedDict(new_fields))
 for row in new_dog_rows:
     table_to.append(row)
 
-rows.export_to_csv(table_to, "retina_dog_test.csv")
+rows.export_to_csv(table_to, "dataset/new_dog_test.csv")
