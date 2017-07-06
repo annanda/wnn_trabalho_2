@@ -8,54 +8,41 @@ source_file = 'dataset/new'
 output_file = 'wnn'
 
 
-def apply_wisard(source_file, num_bits_addr, bleaching, randomize_positions):
-    dataset = AnimalDataset(source_file + '_train_cat.csv')
-    cat_testset = AnimalTestDataset(source_file + '_cat_test.csv')
-    bits_memoria_max = 36
-    score_total = []
-    for i in xrange(bits_memoria_max, 16, -1):
-        scores = [i]
-        w = WiSARD(i, bleaching, randomize_positions)
-        w.fit(dataset.x_train + dataset.x_test, dataset.y_train + dataset.y_test)
-        predicted = w.predict_proba(dataset.x_test)
-        # predicted_on_cats = w.predict_proba(cat_testset.x)
-        expected = dataset.y_test
-        score = log_loss(expected, predicted)
-        scores.append(score)
-        print("Logloss on cats: {}, memoria: {}".format(score, i))
+def apply_wisard(source_file, num_bits_addr, bleaching, randomize_positions, animal, number_examples):
+    if animal == 'cat':
+        dataset = AnimalDataset(source_file + '_train_cat.csv', number_examples)
+    else:
+        dataset = AnimalDataset(source_file + '_train_dog.csv', number_examples)
 
-        ###########################################
+    if number_examples is None:
+        number_examples = dataset.number_exemples
 
-        dataset = AnimalDataset(source_file + '_train_dog.csv')
-        dog_testset = AnimalTestDataset(source_file + '_dog_test.csv')
+    scores = [number_examples]
+    w = WiSARD(num_bits_addr, bleaching, randomize_positions)
+    w.fit(dataset.x_train, dataset.y_train)
+    predicted = w.predict_proba(dataset.x_test)
+    expected = dataset.y_test
+    score = log_loss(expected, predicted)
+    scores.append(score)
+    print("{},{}".format(number_examples, score))
 
-        w_2 = WiSARD(num_bits_addr, bleaching, randomize_positions)
-        w_2.fit(dataset.x_train + dataset.x_test, dataset.y_train + dataset.y_test)
-        predicted = w_2.predict_proba(dataset.x_test)
-        # predicted_on_dogs = w_2.predict_proba(dog_testset.x)
-        expected = dataset.y_test
-        score = log_loss(expected, predicted)
-        scores.append(score)
-        print("Logloss on dogs: {}, memoria: {}".format(score, i))
-
-        # dog_testset.export_prob_predictions_to_csv(output_file + '_memoria_' + str(i) + '.csv', cat_testset.ids + dog_testset.ids,
-        #
-        #                                       list(predicted_on_cats) + list(predicted_on_dogs))
-    #
-        score_total.append(scores)
-    return score_total
+    return scores
 
 
 if __name__ == '__main__':
     num_bits_addr = 34
     bleaching = True
     randomize_positions = True
-    scores = apply_wisard(source_file, num_bits_addr, bleaching, randomize_positions)
+    total = []
+    # for i in xrange(288, 14035):
+    animal = 'dog'
+    scores_cat = apply_wisard(source_file, num_bits_addr, bleaching, randomize_positions, animal, None)
+    total.append(scores_cat)
 
-    with open('resultado_memoria_2.csv', 'w') as csv_file:
-        for score in scores:
-            rowwriter = csv.writer(csv_file, delimiter=',')
-            rowwriter.writerow(score)
+    # with open('resultado_dog_exemples.csv', 'w') as csv_file:
+    #     for item in total:
+    #         rowwriter = csv.writer(csv_file, delimiter=',')
+    #         rowwriter.writerow(item)
 
 
 
