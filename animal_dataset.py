@@ -2,6 +2,7 @@ import csv
 from collections import OrderedDict
 import rows
 
+VALOR_DIVISAO = 10021
 
 class AnimalDataset:
     def __init__(self, path_to_dataset):
@@ -19,10 +20,10 @@ class AnimalDataset:
                 example = [int(feature) for feature in row[:-1]]
                 x.append(example)
                 y.append(row[-1])
-            self.x_train = x[:8901]
-            self.x_test = x[8901:]
-            self.y_train = y[:8901]
-            self.y_test = y[8901:]
+            self.x_train = x[:VALOR_DIVISAO]
+            self.x_test = x[VALOR_DIVISAO:]
+            self.y_train = y[:VALOR_DIVISAO]
+            self.y_test = y[VALOR_DIVISAO:]
             # self.transform_test_labels()
 
     def transform_test_labels(self):
