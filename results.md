@@ -1,4 +1,5 @@
 1º teste
+treinamento: 8901
 memoria: 32 bits
 Bleaching True
 Logloss on cats: 1.75524577218
@@ -35,3 +36,20 @@ Logloss on dogs: 1.53746879003, memoria: 23
 Logloss on cats: 4.29311921721, memoria: 22
 Logloss on dogs: 1.53746879003, memoria: 22
 Logloss on cats: 4.47204766451, memoria: 21
+
+Logloss on dogs: 1.55662009371
+
+Logloss on dogs: 1.55662009371
+
+Aumentando o número de exemplos de treinamento para 10021
+Logloss on cats: 1.74397487845
+Logloss on dogs: 1.5615549997
+
+
+memoria: 8 bits
+Logloss on cats: 1.60096553251
+
+
+
+Logloss on cats: 1.60096553251
+Logloss on dogs: 1.698786007
