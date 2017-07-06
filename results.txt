@@ -1,0 +1,18 @@
+Logloss on cats: 4.90061830916, memoria: 2
+Logloss on dogs: 1.53746879003, memoria: 2
+[4.9006183091621613]
+[1.5374687900323782]
+
+Logloss on cats: 4.39548681281, memoria: 3
+Logloss on dogs: 1.53746879003, memoria: 3
+
+Logloss on cats: 2.88551465964, memoria: 4
+Logloss on dogs: 1.53746879003, memoria: 4
+Logloss on cats: 2.94555018306, memoria: 5
+Logloss on dogs: 1.53746879003, memoria: 5
+
+
+Logloss on cats: 10.3683225253, memoria: 38
+Logloss on dogs: 1.53746879003, memoria: 38
+Logloss on cats: 1.54247390552, memoria: 37
+Logloss on dogs: 1.53746879003, memoria: 37
