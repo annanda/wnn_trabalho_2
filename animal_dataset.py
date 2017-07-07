@@ -27,12 +27,12 @@ class AnimalDataset:
             self.x_test = x[self.valor_divisao:]
             self.y_train = y[:self.valor_divisao]
             self.y_test = y[self.valor_divisao:]
-            self.analise_dataset_train()
-            print len(x)
-            print len(self.y_train)
-            # self.balance_dataset_train()
-            # self.balance_dataset_test()
             # self.analise_dataset_train()
+            # print len(x)
+            # print len(self.y_train)
+            self.balance_dataset_train()
+            # self.balance_dataset_test()
+            self.analise_dataset_train()
 
     def percentage(self, percent, whole):
         return int((percent * whole) / 100.0)
@@ -62,10 +62,10 @@ class AnimalDataset:
 
     def analise_dataset_train(self):
         exemplos = Counter(self.y_train)
-        print exemplos.most_common(5)
+        print exemplos.most_common()
 
         teste_exemplos = Counter(self.y_test)
-        print teste_exemplos.most_common(5)
+        print teste_exemplos.most_common()
 
     def balance_dataset_train(self):
         new_x_train = []
@@ -85,6 +85,13 @@ class AnimalDataset:
         for i, item in enumerate(self.y_train):
             if quantidies[item] >= number_exemples:
                 continue
+            elif item == '4':
+                if quantidies[item] >= 5:
+                    continue
+                else:
+                    new_x_train.append(self.x_train[i])
+                    new_y_train.append(item)
+                    quantidies[item] += 1
             else :
                 new_x_train.append(self.x_train[i])
                 new_y_train.append(item)
@@ -95,8 +102,7 @@ class AnimalDataset:
     def balance_dataset_test(self):
         new_x_test = []
         new_y_test = []
-        contador = Counter(self.y_test)
-        number_exemples = contador.most_common()[-1][-1]
+        number_exemples = 25
         quantidies = {
             '0': 0,
             '1': 0,
