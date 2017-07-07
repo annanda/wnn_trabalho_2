@@ -1,6 +1,6 @@
 from PyWANN.WiSARD import WiSARD
-from sklearn.metrics import log_loss
-from animal_dataset import AnimalDataset, AnimalTestDataset
+from sklearn.metrics import log_loss, confusion_matrix
+from animal_dataset import AnimalDataset
 import csv
 
 # source_type = ''
@@ -21,11 +21,26 @@ def apply_wisard(source_file, num_bits_addr, bleaching, randomize_positions, ani
     w = WiSARD(num_bits_addr, bleaching, randomize_positions)
     w.fit(dataset.x_train, dataset.y_train)
     predicted = w.predict_proba(dataset.x_test)
-    expected = dataset.y_test
+    expected = [int(y) for y in dataset.y_test]
     score = log_loss(expected, predicted)
     scores.append(score)
     print("{},{}".format(number_examples, score))
 
+    predicted_class = []
+    for element in predicted:
+        max_value = max(element)
+        idx_max_value = list(element).index(max_value)
+        predicted_class.append(idx_max_value)
+
+
+    #     'Return_to_owner': 0,
+    #     'Euthanasia': 1,
+    #     'Adoption': 2,
+    #     'Transfer': 3,
+    #     'Died': 4
+
+    matrix = confusion_matrix(expected, predicted_class)
+    print matrix
     return scores
 
 
@@ -34,9 +49,9 @@ if __name__ == '__main__':
     bleaching = True
     randomize_positions = True
     total = []
-    # for i in xrange(288, 14035):
+    # for i in xrange(3186, 10020):
     animal = 'dog'
-    scores_cat = apply_wisard(source_file, num_bits_addr, bleaching, randomize_positions, animal, None)
+    scores_cat = apply_wisard(source_file, num_bits_addr, bleaching, randomize_positions, animal, 29)
     total.append(scores_cat)
 
     # with open('resultado_dog_exemples.csv', 'w') as csv_file:
